@@ -2,6 +2,12 @@ package net.cnki.common;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @Description: 统一返回实体
+ * @author ZhiPengyu
+ * @date: 2020年4月29日 下午2:48:18
+ */
 public class ResponseBody implements Serializable {
  
     /**
