@@ -29,8 +29,8 @@ public class MyAuthenctiationSessionInformationExpiredStrategy implements Sessio
 		// TODO Auto-generated method stub
 		logger.info("已被其他用户登录！");
 		ResponseBody responseBody = new ResponseBody();
-	    responseBody.setStatus("101");
-	    responseBody.setMsg("Session Expires!Other users login！");
+	    responseBody.setCode("101");
+	    responseBody.setMessage("Session Expires!Other users login！");
 	    
 	    HttpServletResponse response = event.getResponse();
 	    response.setContentType("application/json;charset=UTF-8");

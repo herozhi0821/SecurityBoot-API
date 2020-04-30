@@ -31,8 +31,8 @@ public class MyAuthenctiationDeniedHandler implements AccessDeniedHandler {
 		logger.info("无权访问！");
 		
 		ResponseBody responseBody = new ResponseBody();
-	    responseBody.setStatus("403");
-	    responseBody.setMsg("Need Authorities!");
+	    responseBody.setCode("403");
+	    responseBody.setMessage("Need Authorities!");
 	    
 	    response.setContentType("application/json;charset=UTF-8");
 	    response.getWriter().write(JSON.toJSONString(responseBody));

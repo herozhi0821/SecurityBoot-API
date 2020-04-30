@@ -31,8 +31,8 @@ public class MyAuthenctiationSuccessHandler extends SimpleUrlAuthenticationSucce
 		logger.info("登录成功！");
 		
 		ResponseBody responseBody = new ResponseBody();
-		responseBody.setStatus("200");
-    	responseBody.setMsg("Login Success!");
+		responseBody.setCode("200");
+    	responseBody.setMessage("Login Success!");
     	
     	response.setContentType("application/json;charset=UTF-8");
     	response.getWriter().write(JSON.toJSONString(responseBody));

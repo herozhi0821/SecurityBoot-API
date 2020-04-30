@@ -31,8 +31,8 @@ public class MyAuthenctiationInvalidSessionStrategy implements InvalidSessionStr
 		logger.info("session到期！");
 		
 		ResponseBody responseBody = new ResponseBody();
-	    responseBody.setStatus("101");
-	    responseBody.setMsg("Session Expires!");
+	    responseBody.setCode("101");
+	    responseBody.setMessage("Session Expires!");
 	    
 	    response.setContentType("application/json;charset=UTF-8");
 	    response.getWriter().write(JSON.toJSONString(responseBody));

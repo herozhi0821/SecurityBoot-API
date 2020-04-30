@@ -13,6 +13,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import net.cnki.common.ResponseBody;
+import net.cnki.common.ResultCode;
+import net.cnki.common.ResultGenerator;
 import net.cnki.usermanage.bean.SysUser;
 import net.cnki.usermanage.service.SysUserService;
 
@@ -22,13 +24,33 @@ public class SysUserController{
 
 	@Autowired
 	private SysUserService sysUserService;
+	@Autowired
+	ResultGenerator resultGenerator;
 
+	@RequestMapping(value = "testjson")
+	public ResponseBody testjson() {
+		List<SysUser> sysUser = sysUserService.selectSysUserByUnameOrCompany(null, null);
+		return resultGenerator.getSuccessResult(sysUser);
+	}
+	@RequestMapping(value = "testjson1")
+	public ResponseBody testjson1() {
+		return resultGenerator.getFailResult("message");
+	}
+	@RequestMapping(value = "testjson2")
+	public ResponseBody testjson2() {
+		return resultGenerator.getFailResult();
+	}
+	@RequestMapping(value = "testjson3")
+	public ResponseBody testjson3() {
+		SysUser aSysUser = new SysUser("1", "1", "1", "1", "1", "1", 1, 1, 1, 1, 1);
+		return resultGenerator.getFreeResult(ResultCode.PARAM_IS_BLANK,aSysUser);
+	}
 	@RequestMapping("/session/invalid")
 	public String sessioninvalid() {
 		logger.info("session过期！");
 		ResponseBody responseBody = new ResponseBody();
-	    responseBody.setStatus("101");
-	    responseBody.setMsg("Session Expires!");
+	    responseBody.setCode("101");
+	    responseBody.setMessage("Session Expires!");
 		return JSON.toJSONString(responseBody);
 	}
 	
@@ -36,10 +58,10 @@ public class SysUserController{
 	@RequestMapping(value = "getSysUserAdmin")
 	public ResponseBody getSysUserAdmin() {
 		ResponseBody responseBody = new ResponseBody();
-	    responseBody.setStatus("200");
-	    responseBody.setMsg("Sccess!");
+	    responseBody.setCode("200");
+	    responseBody.setMessage("Sccess!");
 		List<SysUser> sysUser = sysUserService.selectSysUserByUnameOrCompany(null, null);
-		responseBody.setResult(JSON.toJSONString(sysUser));
+		responseBody.setData(JSON.toJSONString(sysUser));
 		
 		return responseBody;
 	}
@@ -47,10 +69,10 @@ public class SysUserController{
 	@RequestMapping(value = "getSysUserChild")
 	public ResponseBody getSysUserChild() {
 		ResponseBody responseBody = new ResponseBody();
-	    responseBody.setStatus("200");
-	    responseBody.setMsg("Sccess!");
+		responseBody.setCode("200");
+	    responseBody.setMessage("Sccess!");
 		List<SysUser> sysUser = sysUserService.selectSysUserByUnameOrCompany(null, null);
-		responseBody.setResult(JSONObject.toJSONString(sysUser));
+		responseBody.setData(JSONObject.toJSONString(sysUser));
 		
 		return responseBody;
 	}

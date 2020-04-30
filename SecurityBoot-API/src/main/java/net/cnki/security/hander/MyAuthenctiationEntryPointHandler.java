@@ -31,8 +31,8 @@ public class MyAuthenctiationEntryPointHandler implements AuthenticationEntryPoi
 		logger.info("未登录！");
 		
 		ResponseBody responseBody = new ResponseBody();
-        responseBody.setStatus("402");
-        responseBody.setMsg("Need Login!");
+        responseBody.setCode("402");
+        responseBody.setMessage("Need Login!");
         
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(JSON.toJSONString(responseBody));

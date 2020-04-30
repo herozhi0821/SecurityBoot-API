@@ -31,8 +31,8 @@ public class MyAuthenctiationLogoutSuccessHandler implements LogoutSuccessHandle
 		logger.info("退出登录！");
 		
 		ResponseBody responseBody = new ResponseBody();
-		responseBody.setStatus("200");
-        responseBody.setMsg("Logout Success!");
+		responseBody.setCode("200");
+        responseBody.setMessage("Logout Success!");
         
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(JSON.toJSONString(responseBody));

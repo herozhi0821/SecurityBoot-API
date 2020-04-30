@@ -31,8 +31,8 @@ public class MyAuthenctiationFailureHandler extends SimpleUrlAuthenticationFailu
 		logger.info("登录失败！");
 		
 		ResponseBody responseBody = new ResponseBody();
-		responseBody.setStatus("401");
-        responseBody.setMsg("Login Failure!");
+		responseBody.setCode("401");
+        responseBody.setMessage("Login Failure!");
         
         response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().write(JSON.toJSONString(responseBody));
