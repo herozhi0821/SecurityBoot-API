@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * 
@@ -12,6 +13,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
  * @author ZhiPengyu
  * @date: 2020年4月29日 下午2:48:18
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)//使此字段无值时不显示
 public class ResponseBody implements Serializable {
  
     /**
@@ -21,7 +23,7 @@ public class ResponseBody implements Serializable {
 	
 	private String code;
     private String message;
-    @JSONField(serialzeFeatures = {SerializerFeature.WriteMapNullValue})
+    //@JSONField(serialzeFeatures = {SerializerFeature.WriteMapNullValue})//使此字段无值时值为null
     private Object data;
     
 	/* set and get */
