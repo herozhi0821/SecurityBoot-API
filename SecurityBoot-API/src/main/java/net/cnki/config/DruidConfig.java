@@ -1,4 +1,4 @@
-package net.cnki.common;
+package net.cnki.config;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;

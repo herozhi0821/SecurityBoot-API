@@ -43,16 +43,10 @@ public class SysUserController{
 	@RequestMapping(value = "testjson3")
 	public ResponseBody testjson3() {
 		SysUser aSysUser = new SysUser("1", "1", "1", "1", "1", "1", 1, 1, 1, 1, 1);
+		
 		return resultGenerator.getFreeResult(ResultCode.PARAM_IS_BLANK,aSysUser);
 	}
-	@RequestMapping("/session/invalid")
-	public String sessioninvalid() {
-		logger.info("session过期！");
-		ResponseBody responseBody = new ResponseBody();
-	    responseBody.setCode("101");
-	    responseBody.setMessage("Session Expires!");
-		return JSON.toJSONString(responseBody);
-	}
+	
 	
 	@PreAuthorize("hasRole('ROLE_admin')")
 	@RequestMapping(value = "getSysUserAdmin")
@@ -62,8 +56,8 @@ public class SysUserController{
 	    responseBody.setMessage("Sccess!");
 		List<SysUser> sysUser = sysUserService.selectSysUserByUnameOrCompany(null, null);
 		responseBody.setData(JSON.toJSONString(sysUser));
-		
-		return responseBody;
+		sysUser.stream().forEach(pm->{pm.setCompany("CNKICESHI");});
+		return resultGenerator.getSuccessResult(sysUser);
 	}
 	@PreAuthorize("hasRole('ROLE_child')")
 	@RequestMapping(value = "getSysUserChild")

@@ -45,7 +45,15 @@ public class ResultGenerator{
 	public ResponseBody getFreeResult(ResultCode resultCode) {
         return new ResponseBody(resultCode);
     }
-	
+	/**
+	 * 采用枚举中的状态无数据返回
+	 * @param resultCode响应码枚举
+	 * @param message自定义
+	 * @return
+	 */
+	public ResponseBody getFreeResult(ResultCode resultCode,String message) {
+        return new ResponseBody(resultCode,message);
+    }
 	/**
 	 * 采用枚举中的状态带数据返回
 	 * @param resultCode 响应码枚举
