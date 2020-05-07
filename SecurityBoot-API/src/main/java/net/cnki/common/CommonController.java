@@ -1,6 +1,7 @@
 package net.cnki.common;
 
 import java.awt.image.BufferedImage;
+import java.security.Principal;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -10,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +27,8 @@ public class CommonController {
 	ResultGenerator resultGenerator;
 	@Autowired
 	Producer captchaProducer;
+	@Autowired
+	AuthenticationUser authenticationUser;
 	
 	/**
 	 * Kaptcha生成验证码
@@ -48,4 +54,10 @@ public class CommonController {
 		logger.info("session过期！");
 		return resultGenerator.getFreeResult(ResultCode.SESSION_EXPIRES);
 	}
+	
+	@RequestMapping("/admin")
+	public String currentUserName(Principal principal) {
+		System.out.println(authenticationUser.getActiveUser());
+        return principal.getName();
+    }
 }
