@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import net.cnki.security.hander.MyAuthenctiationDeniedHandler;
 import net.cnki.security.hander.MyAuthenctiationEntryPointHandler;
@@ -53,10 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureHandler(myAuthenctiationFailureHandler)//登陆失败401
 				.permitAll()
 				.and()
-			.sessionManagement()//session到期提示
-//				.invalidSessionUrl("/session/invalid")//效果略有差异，此处即便有过期session，多次访问后都会进入未登录拦截，下边则只要存在过期cookies就会一直在过期拦截
-				.invalidSessionStrategy(mMyAuthenctiationInvalidSessionStrategy)//session到期101
-				.and()
+//			.sessionManagement()//session到期提示
+//				.invalidSessionStrategy(mMyAuthenctiationInvalidSessionStrategy)//session到期101
+//				.and()
 			.requestCache().disable()
 			.logout()
 				.logoutSuccessHandler(myAuthenctiationLogoutSuccessHandler)//退出登陆200
@@ -64,7 +64,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()//退出
 				.and()
 			.csrf().disable();//csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());//csrf放开配置方式可以为cookie
-//		http.sessionManagement().maximumSessions(1).expiredSessionStrategy(myAuthenctiationSessionStrategy);//101只允许一个登陆，新的顶替就得
+		http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true).expiredSessionStrategy(myAuthenctiationSessionStrategy);//101只允许一个登陆，新的顶替就得
+	}
+	
+	@Bean
+	public HttpSessionEventPublisher httpSessionEventPublisher() {
+		return new HttpSessionEventPublisher();
 	}
 
 	//加入中间验证层，可实现自定义验证用户等信息
