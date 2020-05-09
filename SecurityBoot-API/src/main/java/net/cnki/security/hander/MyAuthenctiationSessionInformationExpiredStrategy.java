@@ -34,8 +34,7 @@ public class MyAuthenctiationSessionInformationExpiredStrategy implements Sessio
 	    
 	    HttpServletResponse response = event.getResponse();
 	    response.setContentType("application/json;charset=UTF-8");
-	    response.getWriter().print(JSON.toJSONString(responseBody));
-	    response.flushBuffer();	
+	    response.getWriter().write(JSON.toJSONString(responseBody));
 	}
 
 }
