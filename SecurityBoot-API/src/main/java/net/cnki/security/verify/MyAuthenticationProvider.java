@@ -57,18 +57,18 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
             throw new DisabledException("登录用户密码错误！");
         }
  
-        String requestCode = httpServletRequest.getParameter("vercode");
-        HttpSession session = httpServletRequest.getSession();
-		String saveCode = (String) session.getAttribute("captcha");
-		//获取到session验证码后随时清除
-		if(!StringUtils.isEmpty(saveCode)) {
-			session.removeAttribute("captcha");
-		}
-		logger.info("requestCode:"+requestCode+",saveCode:"+saveCode);
-		if(StringUtils.isEmpty(saveCode) || StringUtils.isEmpty(requestCode) || !requestCode.equals(saveCode)) { 
-			logger.info("图片验证码错误！");
-			throw new DisabledException("图形验证码错误！"); 
-		}
+//        String requestCode = httpServletRequest.getParameter("vercode");
+//        HttpSession session = httpServletRequest.getSession();
+//		String saveCode = (String) session.getAttribute("captcha");
+//		//获取到session验证码后随时清除
+//		if(!StringUtils.isEmpty(saveCode)) {
+//			session.removeAttribute("captcha");
+//		}
+//		logger.info("requestCode:"+requestCode+",saveCode:"+saveCode);
+//		if(StringUtils.isEmpty(saveCode) || StringUtils.isEmpty(requestCode) || !requestCode.equals(saveCode)) { 
+//			logger.info("图片验证码错误！");
+//			throw new DisabledException("图形验证码错误！"); 
+//		}
 		logger.info("登录成功");
 		
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();

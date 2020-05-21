@@ -38,11 +38,11 @@ public class MyUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	//用户验证前先验证是否有验证码
-    	String requestCode = httpServletRequest.getParameter("vercode");
-        if(StringUtils.isEmpty(requestCode)) {
-        	logger.info("验证码不能为空！");
-        	throw new UsernameNotFoundException("验证码不能为空！");
-        }
+//    	String requestCode = httpServletRequest.getParameter("vercode");
+//        if(StringUtils.isEmpty(requestCode)) {
+//        	logger.info("验证码不能为空！");
+//        	throw new UsernameNotFoundException("验证码不能为空！");
+//        }
         if(StringUtils.isEmpty(username)) {
         	logger.info("用户名不能为空！");
         	throw new UsernameNotFoundException("用户名不能为空！");
