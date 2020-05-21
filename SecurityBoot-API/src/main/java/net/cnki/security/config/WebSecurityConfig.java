@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/getVerify","/session/invalid").permitAll()
+			.antMatchers("/getVerify","/session/invalid","/swagger-ui.html","/doc.html", "/v2/**", "/webjars/**", "/swagger-resources/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.exceptionHandling()
