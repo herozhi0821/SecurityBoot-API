@@ -11,11 +11,13 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -46,6 +48,14 @@ public class SwaggerConfig {
         responseMessageList.add(new ResponseMessageBuilder().code(3001).message("接口异常!").responseModel(new ModelRef("ResponseBody")).build());
         return responseMessageList;
     }
+	/*
+	 * 全局请求头
+	 */
+	private List<Parameter> parameterBuilder(){
+	    List<Parameter> pars = new ArrayList<Parameter>();
+	    pars.add(new ParameterBuilder().name("Authorization").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).defaultValue("").build());
+	    return pars;
+	}
 	
 	@Bean
     public Docket createHomeRestApi() {
@@ -58,7 +68,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("net.cnki.usermanage.controller"))
                 .paths(PathSelectors.any())
                 .build();
-        		//.globalOperationParameters(pars);
+        		//.globalOperationParameters(parameterBuilder());
     }
 	
 	@Bean

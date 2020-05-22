@@ -18,7 +18,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor())
-                .addPathPatterns("/api/**");
+                .addPathPatterns("/api/**")//拦截
+                .excludePathPatterns("/login");//放过
     }
     @Bean
     public AuthenticationInterceptor authenticationInterceptor() {
