@@ -2,6 +2,7 @@ package net.cnki.redis;
 
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.jedis.JedisConnection;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * 
@@ -10,7 +11,8 @@ import org.springframework.data.redis.connection.jedis.JedisConnection;
  * @Description:  [重写RedisTemplate,加入选库]
  * @CreateDate:   [2019年12月20日 下午2:17:47]
  */
-public class RedisTemplate extends org.springframework.data.redis.core.RedisTemplate {
+@SuppressWarnings("rawtypes")
+public class MyRedisTemplate extends RedisTemplate {
 
     public static ThreadLocal<Integer> indexdb = new ThreadLocal<Integer>(){
         @Override protected Integer initialValue() { return 0; }

@@ -79,9 +79,9 @@ public class RedisConfig {
      * @return
      */
     @Bean
-    public RedisTemplate functionDomainRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    public MyRedisTemplate functionDomainRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         //log.info("RedisTemplate实例化成功！");
-        RedisTemplate redisTemplate = new RedisTemplate();
+    	MyRedisTemplate redisTemplate = new MyRedisTemplate();
         initDomainRedisTemplate(redisTemplate, redisConnectionFactory);
         return redisTemplate;
     }
@@ -102,7 +102,7 @@ public class RedisConfig {
      * @param factory
      */
     @SuppressWarnings("unchecked")
-	private void initDomainRedisTemplate(RedisTemplate redisTemplate, RedisConnectionFactory factory) {
+	private void initDomainRedisTemplate(MyRedisTemplate redisTemplate, RedisConnectionFactory factory) {
         //如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
@@ -119,7 +119,7 @@ public class RedisConfig {
      * @return
      */
     @Bean(name = "redisUtil")
-    public RedisUtil redisUtil(RedisTemplate redisTemplate) {
+    public RedisUtil redisUtil(MyRedisTemplate redisTemplate) {
         //log.info("RedisUtil注入成功！");
         RedisUtil redisUtil = new RedisUtil();
         redisUtil.setRedisTemplate(redisTemplate);

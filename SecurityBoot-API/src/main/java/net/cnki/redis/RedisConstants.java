@@ -14,7 +14,7 @@ public class RedisConstants {
 	/**
 	 * redis库0  此库不指定存储专门数据，用于存储定时失效数据或缓存数据，库1及以后用于存储指定类数据
 	 */
-	private static final Integer datebase=0;
+	private static final Integer datebase0=0;
 
 	/**
 	 * redis库1  
