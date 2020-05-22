@@ -15,6 +15,8 @@ public enum ResultCode {
     /* 失败 */
     FAIL("400", "Failure!"),
     
+    FAIL_TOKEN("5000", "Token信息有误!"),
+    
 	/* 参考HTTP状态码 */
     NO_PERMISSION("403", "Need Authorities!"),//没有权限
     LOGIN_NO("402", "Need Login!"),//未登录

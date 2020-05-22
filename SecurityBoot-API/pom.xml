@@ -116,6 +116,13 @@
             <version>2.0.2</version>
         </dependency>
         <!-- swagger2end -->
+        <!-- token -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.9.0</version>
+        </dependency>
+        <!-- tokenEND -->
 	</dependencies>
 
 	<build>
