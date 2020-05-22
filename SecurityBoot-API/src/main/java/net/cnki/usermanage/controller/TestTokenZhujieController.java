@@ -17,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.cnki.common.ResponseBody;
 import net.cnki.common.ResultGenerator;
+import net.cnki.redis.RedisUtil;
 import net.cnki.token.annotation.PassToken;
 import net.cnki.token.annotation.VerifyToken;
 import net.cnki.usermanage.bean.SysUser;
@@ -33,6 +34,8 @@ public class TestTokenZhujieController{
 	private SysUserService sysUserService;
 	@Autowired
 	ResultGenerator resultGenerator;
+	@Autowired
+	RedisUtil redisUtil;
 
 	@ApiOperation(value = "测试1", notes="首页所显示统计数据",httpMethod = "GET")
 	@ApiOperationSupport(order = 1)
@@ -48,6 +51,7 @@ public class TestTokenZhujieController{
 	@PassToken
 	@RequestMapping(value = "testzhuie2")
 	public ResponseBody testzhuie2() {
+		redisUtil.set("test", "test",1);
 		return resultGenerator.getSuccessResult();
 	}
 
