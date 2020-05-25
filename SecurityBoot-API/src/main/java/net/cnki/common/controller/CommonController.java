@@ -1,4 +1,4 @@
-package net.cnki.common;
+package net.cnki.common.controller;
 
 import java.awt.image.BufferedImage;
 import java.security.Principal;
@@ -21,6 +21,10 @@ import com.google.code.kaptcha.Producer;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.cnki.common.AuthenticationUser;
+import net.cnki.common.ResponseBody;
+import net.cnki.common.ResultCode;
+import net.cnki.common.ResultGenerator;
 
 @Api(value = "科技查重项目 Rest API",tags = {"公共管理模块"})
 @ApiSort(120)

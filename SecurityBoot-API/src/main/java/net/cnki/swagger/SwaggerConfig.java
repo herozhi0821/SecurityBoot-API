@@ -1,4 +1,4 @@
-package net.cnki.config;
+package net.cnki.swagger;
 
 import java.util.ArrayList;
 import java.util.List;

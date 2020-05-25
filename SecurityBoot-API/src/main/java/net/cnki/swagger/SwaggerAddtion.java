@@ -1,4 +1,4 @@
-package net.cnki.common;
+package net.cnki.swagger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,13 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.ApiListingScannerPlugin;
 import springfox.documentation.spi.service.contexts.DocumentationContext;
 import springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator;
-
+/**
+ * 
+ * @author ZhiPengyu
+ * @ClassName:    [SwaggerAddtion.java]
+ * @Description:  [自定义的非controller接口]
+ * @CreateDate:   [2020年5月25日 上午10:33:48]
+ */
 @Component
 public class SwaggerAddtion implements ApiListingScannerPlugin {
 
