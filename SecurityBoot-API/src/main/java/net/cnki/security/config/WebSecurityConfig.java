@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.deleteCookies("JSESSIONID")
 				.permitAll()//退出
 				.and()
-			.csrf().disable();//csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());//csrf放开配置方式可以为cookie
+			.cors().and().csrf().disable();//csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());//csrf放开配置方式可以为cookie
 		http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);//101只允许一个登陆，不允许新的登录
 //		http.sessionManagement().maximumSessions(1).expiredSessionStrategy(myAuthenctiationSessionStrategy);//会话管理：用户仅允许一个登陆,踢出旧的登录;
 	}
