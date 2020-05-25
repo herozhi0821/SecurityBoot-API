@@ -1,0 +1,73 @@
+{
+    "properties": {
+        "pidinfo": {
+            "type": "keyword",
+            "store": "true"
+        },
+        "filename": {
+            "type": "text",
+            "term_vector": "no",
+            "store": "true",
+            "analyzer": "content_analyzer",
+            "search_analyzer": "content_analyzer"
+        },
+        "projectname": {
+            "type": "text",
+            "term_vector": "no",
+            "store": "true",
+            "analyzer": "content_analyzer",
+            "search_analyzer": "content_analyzer"
+        },
+        "projectmember": {
+            "type": "text",
+            "term_vector": "no",
+            "store": "true",
+            "analyzer": "name_analyzer",
+            "search_analyzer": "name_analyzer"
+        },
+        "projectnum": {
+            "type": "keyword",
+            "store": "true"
+        },
+        "allContent": {
+            "type": "text",
+            "term_vector": "no",
+            "store": "true",
+            "analyzer": "content_analyzer",
+            "search_analyzer": "content_analyzer"
+        },
+        "researchTarget": {
+            "type": "text",
+            "term_vector": "no",
+            "store": "true",
+            "analyzer": "content_analyzer",
+            "search_analyzer": "content_analyzer"
+        },
+        "researchContent": {
+            "type": "text",
+            "term_vector": "no",
+            "store": "true",
+            "analyzer": "content_analyzer",
+            "search_analyzer": "content_analyzer"
+        },
+        "researchPlan": {
+            "type": "text",
+            "term_vector": "no",
+            "store": "true",
+            "analyzer": "content_analyzer",
+            "search_analyzer": "content_analyzer"
+        },
+        "researchOther": {
+            "type": "text",
+            "term_vector": "no",
+            "store": "true",
+            "analyzer": "content_analyzer",
+            "search_analyzer": "content_analyzer"
+        },
+        "createtime": {
+            "type": "date",
+            "store": "true",
+            "format": "8yyyy/MM/dd||yyyy/M/dd||yyyy/MM/d||yyyy/M/d"
+        }
+    }
+}
