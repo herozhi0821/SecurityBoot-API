@@ -1,0 +1,169 @@
+<properties>
+    <!-- 创建索引表结构 -->
+    <property name="createProInfo">
+        <![CDATA[{
+		    "settings": {
+		        "number_of_shards": 1,
+		        "number_of_replicas": 0,
+		        "analysis": {
+		            "filter": {
+		                "my_shingle_filter": {
+		                    "type": "shingle",
+		                    "min_shingle_size": 4,
+		                    "max_shingle_size": 7,
+		                    "output_unigrams": false
+		                },
+		                "my_stemmer": {
+		                    "type": "stemmer",
+		                    "name": "english"
+		                }
+		            },
+		            "analyzer": {
+		                "name_analyzer": {
+		                    "tokenizer": "name_tokenizer"
+		                },
+		                "content_analyzer": {
+		                    "type": "custom",
+		                    "tokenizer": "ik_smart",
+		                    "filter": [
+		                        "lowercase",
+		                        "my_stemmer",
+		                        "my_shingle_filter"
+		                    ]
+		                }
+		            },
+		            "tokenizer": {
+		                "name_tokenizer": {
+		                    "type": "pattern",
+		                    "pattern": "\\;"
+		                }
+		            }
+		        }
+		    },
+		    "mappings": {
+		        "projectdocument": {
+		            "_all": {
+		                "enabled": "false"
+		            },
+		            "properties": {
+		                "pidinfo": {
+		                    "type": "keyword",
+		                    "store": "true"
+		                },
+		                "filename": {
+		                    "type": "text",
+		                    "term_vector": "no",
+		                    "store": "true",
+		                    "analyzer": "content_analyzer",
+		                    "search_analyzer": "content_analyzer"
+		                },
+		                "projectname": {
+		                    "type": "text",
+		                    "term_vector": "no",
+		                    "store": "true",
+		                    "analyzer": "content_analyzer",
+		                    "search_analyzer": "content_analyzer"
+		                },
+		                "projectmember": {
+		                    "type": "text",
+		                    "term_vector": "no",
+		                    "store": "true",
+		                    "analyzer": "name_analyzer",
+		                    "search_analyzer": "name_analyzer"
+		                },
+		                "projectnum": {
+		                    "type": "keyword",
+		                    "store": "true"
+		                },
+		                "allContent": {
+		                    "type": "text",
+		                    "term_vector": "no",
+		                    "store": "true",
+		                    "analyzer": "content_analyzer",
+		                    "search_analyzer": "content_analyzer"
+		                },
+		                "researchOne": {
+                            "type": "text",
+                            "term_vector": "no",
+                            "store": "true",
+                            "analyzer": "content_analyzer",
+                            "search_analyzer": "content_analyzer"
+                        },
+                        "researchTwo": {
+                            "type": "text",
+                            "term_vector": "no",
+                            "store": "true",
+                            "analyzer": "content_analyzer",
+                            "search_analyzer": "content_analyzer"
+                        },
+                        "researchThree": {
+                            "type": "text",
+                            "term_vector": "no",
+                            "store": "true",
+                            "analyzer": "content_analyzer",
+                            "search_analyzer": "content_analyzer"
+                        },
+                        "researchFour": {
+                            "type": "text",
+                            "term_vector": "no",
+                            "store": "true",
+                            "analyzer": "content_analyzer",
+                            "search_analyzer": "content_analyzer"
+                        },
+                        "researchFive": {
+                            "type": "text",
+                            "term_vector": "no",
+                            "store": "true",
+                            "analyzer": "content_analyzer",
+                            "search_analyzer": "content_analyzer"
+                        },
+		                "createtime": {
+		                    "type": "date",
+		                    "store": "true",
+		                    "format": "yyyy/MM/dd||yyyy/M/dd||yyyy/MM/d||yyyy/M/d"
+		                }
+		            }
+		        }
+		    }
+		}]]>
+    </property>
+    
+    <!-- 根据ID查询 -->
+    <property name="searchProById">
+        <![CDATA[{
+            "query": {
+                "match": {
+                   "pidinfo": #[condition]
+                }
+            }
+        }]]>
+    </property>
+   
+   <!-- 精确指定内容查询 -->
+    <property name="proHighSearch">
+        <![CDATA[{
+		   "query":{
+		     "match_phrase": {
+		       #[coml]:{
+		         "query" : #[cont],
+		         "slop": 0
+		       }
+		     }
+		   },
+		   "sort":[
+		     {
+		       "createTime":"desc"
+		     }
+		    ],
+		   "highlight":{
+		     "require_field_match": #[isall],
+		     "pre_tags": ["<span>"],
+		     "post_tags": ["</span>"],
+		     "fields": {
+		       "*":{}
+		     }
+		   }
+		}]]>
+    </property>
+      
+</properties>
