@@ -12,7 +12,7 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
 	//-----------------------------------跨域----------------------------------
 	private CorsConfiguration buildConfig() {
 	    CorsConfiguration corsConfiguration = new CorsConfiguration();
-	    corsConfiguration.addAllowedOrigin("*");
+	    corsConfiguration.addAllowedOrigin("http://192.168.52.26:3000");//"http://192.168.52.26:3000"
 	    corsConfiguration.addAllowedHeader("*");
 	    corsConfiguration.addAllowedMethod("*");
 	    corsConfiguration.addExposedHeader("Authorization");
@@ -28,11 +28,11 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
 	 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-	    registry.addMapping("/**")
-	            .allowedOrigins("*")
-	            .allowCredentials(true)
-	            .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")
-	            .maxAge(3600);
+	    registry.addMapping("/**")//设置允许跨域的路径
+	            .allowedOrigins("http://192.168.52.26:3000")//设置允许跨域请求的域名,为*时跨域不成功，指定明确域名"http://192.168.52.26:3000"
+	            .allowCredentials(true)//是否允许证书 不再默认开启
+	            .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")//设置允许的方法
+	            .maxAge(3600);//跨域允许时间
 	}
 	
 }

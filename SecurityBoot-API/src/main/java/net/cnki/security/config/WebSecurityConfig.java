@@ -9,8 +9,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.web.cors.CorsUtils;
 
+import net.cnki.security.filter.CorsFilter;
+import net.cnki.security.filter.LoginAuthenticationFilter;
 import net.cnki.security.hander.MyAuthenctiationDeniedHandler;
 import net.cnki.security.hander.MyAuthenctiationEntryPointHandler;
 import net.cnki.security.hander.MyAuthenctiationFailureHandler;
@@ -41,9 +46,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/getVerify","/session/invalid","/swagger-ui.html","/doc.html", "/v2/**", "/webjars/**", "/swagger-resources/**").permitAll()
-			.anyRequest().authenticated()
+		http.anonymous().disable()//分离时无用户状态不允许
+			.authorizeRequests()
+				.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()//让Spring security放行所有preflight request 
+				.requestMatchers(CorsUtils::isCorsRequest).permitAll()
+				.antMatchers("/getVerify","/session/invalid","/swagger-ui.html","/doc.html", "/v2/**", "/webjars/**", "/swagger-resources/**").permitAll()
+				.anyRequest().authenticated()
 			.and()
 			.exceptionHandling()
 				.authenticationEntryPoint(myAuthenctiationEntryPointHandler)//未登录402
@@ -66,8 +74,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.cors().and().csrf().disable();//csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());//csrf放开配置方式可以为cookie
 		http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);//101只允许一个登陆，不允许新的登录
 //		http.sessionManagement().maximumSessions(1).expiredSessionStrategy(myAuthenctiationSessionStrategy);//会话管理：用户仅允许一个登陆,踢出旧的登录;
+		http.addFilterBefore(loginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(WebSecurityCorsFilter(), ChannelProcessingFilter.class); // 保证跨域的过滤器首先触发
 	}
+	@Bean
+	public CorsFilter WebSecurityCorsFilter() throws Exception {
+		CorsFilter filter = new CorsFilter();
+        return filter;
+    }
 	
+	@Bean
+	public LoginAuthenticationFilter loginAuthenticationFilter() throws Exception {
+        LoginAuthenticationFilter filter = new LoginAuthenticationFilter();
+        filter.setAuthenticationFailureHandler(myAuthenctiationFailureHandler);
+        filter.setAuthenticationSuccessHandler(myAuthenctiationSuccessHandler);
+        filter.setAuthenticationManager(authenticationManagerBean());
+        return filter;
+    }
 	@Bean
 	public HttpSessionEventPublisher httpSessionEventPublisher() {
 		return new HttpSessionEventPublisher();
