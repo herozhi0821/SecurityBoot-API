@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.anonymous().disable()//分离时无用户状态不允许
+		http//.anonymous().disable()//分离时无用户状态不允许
 			.authorizeRequests()
 				.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()//让Spring security放行所有preflight request 
 				.requestMatchers(CorsUtils::isCorsRequest).permitAll()

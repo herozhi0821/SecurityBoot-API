@@ -36,7 +36,7 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
                 password = map.get("password");
 //                vercode = map.get("vercode");
                 
-//                request.getSession().setAttribute("vercode", vercode);
+                request.getSession().setAttribute("vercode", vercode);
             } catch (IOException e) {
                 e.printStackTrace();
             }
