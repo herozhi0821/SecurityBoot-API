@@ -4,12 +4,12 @@ public class Test {
 
 	public static void main(String[] args) {
 		//采用环境类，将具体采用哪个封装算法的逻辑进行分装，以供用户直接使用
-		Context c =new Context();
-		ICalculator iCalculator = new ConcreteStrategyA();
+		Context c =new Context();//厨房
+		ICalculator iCalculator = new ConcreteStrategyA();//清蒸，ICalculator做的方式
 		c.setiCalculator(iCalculator);
 		System.out.println(c.strategyMethod());
 		
-		iCalculator = new ConcreteStrategyB();
+		iCalculator = new ConcreteStrategyB();//红烧，ICalculator做的方式
 		c.setiCalculator(iCalculator);
 		System.out.println(c.strategyMethod());
 		
