@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,8 +73,13 @@ public class CommonController {
 	@ApiOperation(value = "获取当前用户", notes="获取当前用户",httpMethod = "GET")
 	@ApiOperationSupport(order = 3)
 	@RequestMapping("/admin")
+	@Transactional
 	public String currentUserName(Principal principal) {
-		System.out.println(authenticationUser.getActiveUser());
+		try {
+			System.out.println(authenticationUser.getActiveUser());
+		} catch (Exception e) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动回滚
+		}
         return principal.getName();
     }
 }
