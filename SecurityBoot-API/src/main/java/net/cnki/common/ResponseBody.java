@@ -23,7 +23,7 @@ public class ResponseBody implements Serializable {
 	
 	private String code;
     private String message;
-    //@JSONField(serialzeFeatures = {SerializerFeature.WriteMapNullValue})//使此字段无值时值为null
+    @JSONField(serialzeFeatures = {SerializerFeature.WriteMapNullValue})//使此字段无值时值为null
     private Object data;
     
 	/* set and get */
