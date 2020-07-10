@@ -144,6 +144,11 @@
             <artifactId>bboss-elasticsearch-spring-boot-starter</artifactId>
             <version>5.9.9</version>
         </dependency>
+        <!-- email -->
+        <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
