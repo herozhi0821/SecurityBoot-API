@@ -1,6 +1,7 @@
 package net.cnki.mail.send;
 
 import java.io.File;
+import java.util.Date;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
@@ -17,6 +18,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 @Service
 public class IMailServiceImpl implements IMailService {
@@ -26,6 +29,9 @@ public class IMailServiceImpl implements IMailService {
 	 */
 	@Autowired
     JavaMailSender mailSender;
+	
+	@Autowired
+    TemplateEngine templateEngine;//用于调用html模板
 	
 	@Value("${spring.mail.username}")
     private String from;
@@ -100,6 +106,41 @@ public class IMailServiceImpl implements IMailService {
             //邮件html内容添加图片
             FileSystemResource res = new FileSystemResource(new File(resource));
             messageHelper.addInline(reid, res);
+            //发送
+            mailSender.send(message);
+            //日志信息
+            logger.info("邮件已经发送。");
+        } catch (MailSendException e) {
+        	detectInvalidAddress(e);
+            logger.error("发送邮件时发生异常！", e);
+        } catch (MessagingException e) {
+        	logger.error("发送邮件时发生异常！", e);
+		}
+	}
+	
+	@Override
+	public void sendHtmlModelMail(String to, String subject, String name, String posName, String joblevelName, String departmentName) {
+		//获取MimeMessage对象
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+        	MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
+            //邮件发送人
+            messageHelper.setFrom(from);
+            //邮件接收人
+            messageHelper.setTo(to);
+            //邮件主题
+            messageHelper.setSubject(subject);
+            //邮件html模板参数内容
+            Context context = new Context();
+            context.setVariable("name", name);
+            context.setVariable("posName", posName);
+            context.setVariable("joblevelName", joblevelName);
+            context.setVariable("departmentName", departmentName);
+            String mail = templateEngine.process("MailModule", context);
+            messageHelper.setText(mail, true);
+            //邮件时间
+            messageHelper.setSentDate(new Date());
+            
             //发送
             mailSender.send(message);
             //日志信息
